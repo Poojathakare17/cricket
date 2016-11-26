@@ -33,26 +33,27 @@ module.exports = {
   insertEach: function (req, res) {
     request('http://cricapi.com/api/playerStats?pid=4068', function (error, response, body) {
       if (!error && response.statusCode == 200) {
+        console.log(response);
         var data = JSON.parse(response.body);
         console.log(data) // Show the HTML for the Google homepage. 
         res.json(JSON.parse(response.body));
       }
     })
   },
-  add: function (req, res) {
-    User.create(req.body).exec(function (err, result) {
-      if (err) {
-        sails.log.debug('Some error occured ' + err);
-        return res.json(500, {
-          error: 'Some error occured'
-        });
-      }
-      sails.log.debug('Success', JSON.stringify(result));
-      return res.json(200, {
-        success: 'Success'
-      });
+  // add: function (req, res) {
+  //   User.create(req.body).exec(function (err, result) {
+  //     if (err) {
+  //       sails.log.debug('Some error occured ' + err);
+  //       return res.json(500, {
+  //         error: 'Some error occured'
+  //       });
+  //     }
+  //     sails.log.debug('Success', JSON.stringify(result));
+  //     return res.json(200, {
+  //       success: 'Success'
+  //     });
 
-    });
+  //   });
 
-  },
+  // },
 };
