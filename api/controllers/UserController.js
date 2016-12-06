@@ -6,54 +6,84 @@
  */
 var cricapi = require("node-cricapi");
 var request = require('request');
-// NgppjVYBlcNihBRKvsWo7KV1C5R2 
 module.exports = {
-  // getAll: function (req, res) {
-  //   for (var i = 1; i <= 500; i++) {
-  //     request({
-  //       url: 'http://cricapi.com/api/playerStats?pid=1000',
-  //       // apikey: 'NgppjVYBlcNihBRKvsWo7KV1C5R2',
-  //       apikey: '7dn28he8h2e72',
-  //       method: "POST"
-  //     }, function (error, response, body) {
-  //       if (!error && response.statusCode == 200) {
-  //         console.log(body) // Show the HTML for the Google homepage. 
-  //         console.log(response.body);
-  //         var data = JSON.parse(response.body);
-  //         if (data.name == "") {
 
-  //         } else {
-  //           res.json(JSON.parse(response.body));
-  //         }
-
-  //       }
-  //     })
-  //   }
-  // },
-  insertEach: function (req, res) {
-    request('http://cricapi.com/api/playerStats?pid=4068', function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        console.log(response);
-        var data = JSON.parse(response.body);
-        console.log(data) // Show the HTML for the Google homepage. 
-        res.json(JSON.parse(response.body));
-      }
-    })
+  getAll: function (req, res) {
+    var obj = {};
+    var api = {
+      "apikey": "NgppjVYBlcNihBRKvsWo7KV1C5R2"
+    };
+    api = _.assign(api, req.body);
+    for (var i = 1; i <= 10; i++) {
+      request({
+        url: "http://cricapi.com/api/playerStats?pid=" + i,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(api)
+      }, function (err, httpResponse, body) {
+        if (body !== "") {
+          var data = JSON.parse(body);
+          if (data.name == "") {} else {
+            console.log(data);
+            if (data.name) {
+              obj.name = data.name;
+            }
+            if (data.cricid) {
+              obj.cricid = data.i;
+            }
+            if (data.fullName) {
+              obj.fullName = data.fullName;
+            }
+            if (data.born) {
+              obj.born = data.born;
+            }
+            if (data.currentAge) {
+              obj.currentAge = data.currentAge;
+            }
+            if (data.majorTeams) {
+              obj.majorTeams = data.majorTeams;
+            }
+            if (data.playingRole) {
+              obj.playingRole = data.playingRole;
+            }
+            if (data.battingStyle) {
+              obj.battingStyle = data.battingStyle;
+            }
+            if (data.bowlingStyle) {
+              obj.bowlingStyle = data.bowlingStyle;
+            }
+            if (data.profile) {
+              obj.profile = data.profile;
+            }
+            if (data.country) {
+              obj.country = data.country;
+            }
+            if (data.imageURL) {
+              obj.imageURL = data.imageURL;
+            }
+            if (data.data) {
+              if (data.data.batting) {
+                obj.batting = JSON.stringify(data.data.batting);
+              }
+              if (data.data.bowling) {
+                obj.bowling = JSON.stringify(data.data.bowling);
+              }
+            }
+            User.create(obj).exec(function (err, result) {
+              if (err) {
+                sails.log.debug('Some error occured ' + err);
+                return res.json(500, {
+                  error: 'Some error occured'
+                });
+              } else if (result) {
+                console.log("data for " + i);
+              }
+            });
+          }
+        }
+      })
+    }
   },
-  // add: function (req, res) {
-  //   User.create(req.body).exec(function (err, result) {
-  //     if (err) {
-  //       sails.log.debug('Some error occured ' + err);
-  //       return res.json(500, {
-  //         error: 'Some error occured'
-  //       });
-  //     }
-  //     sails.log.debug('Success', JSON.stringify(result));
-  //     return res.json(200, {
-  //       success: 'Success'
-  //     });
-
-  //   });
-
-  // },
 };

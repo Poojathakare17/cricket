@@ -9,19 +9,44 @@ module.exports = {
   autoCreatedAt: false,
   autoUpdatedAt: false,
   attributes: {
-    username: {
-      type: "string",
-      required: true,
-      unique: true
+    name: {
+      type: "string"
     },
-    password: {
-      type: "string",
-      required: true
+    fullName: {
+      type: "string"
     },
-    email: {
-      type: "string",
-      required: true,
-      unique: true
+    born: {
+      type: "string"
     },
+    currentAge: {
+      type: "string"
+    },
+    majorTeams: {
+      type: "string"
+    },
+    playingRole: {
+      type: "string"
+    },
+    battingStyle: {
+      type: "string"
+    },
+    bowlingStyle: {
+      type: "string"
+    },
+    profile: {
+      type: "string"
+    },
+    country: {
+      type: "string"
+    },
+    imageURL: {
+      type: "string"
+    },
+    bowling: {
+      type: "string"
+    },
+    batting: {
+      type: "string"
+    }
   }
 };
