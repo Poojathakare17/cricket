@@ -14,7 +14,7 @@ module.exports = {
       "apikey": "NgppjVYBlcNihBRKvsWo7KV1C5R2"
     };
     api = _.assign(api, req.body);
-    for (var i = 1; i <= 10; i++) {
+    for (var i = 1; i <= 100; i++) {
       request({
         url: "http://cricapi.com/api/playerStats?pid=" + i,
         method: "POST",
@@ -23,7 +23,8 @@ module.exports = {
         },
         body: JSON.stringify(api)
       }, function (err, httpResponse, body) {
-        if (body !== "") {
+        console.log(body);
+        if (body !== "undefined") {
           var data = JSON.parse(body);
           if (data.name == "") {} else {
             console.log(data);
